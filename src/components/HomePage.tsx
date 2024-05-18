@@ -1,3 +1,5 @@
+"use client";
+import { FC } from "react";
 import {
   Card,
   CardContent,
@@ -6,8 +8,33 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useGetCryptosQuery } from "@/services/cryptoApi";
 
-const HomePage = () => {
+const HomePage: FC = () => {
+  const { data, error, isFetching } = useGetCryptosQuery();
+
+  console.log(data);
+
+  if (error) {
+    if ("data" in error) {
+      return <div>Error: </div>;
+    } else {
+      return <div>Error: An unknown error occurred</div>;
+    }
+  }
+
+  if (isFetching) {
+    return <div>Loading...</div>;
+  }
+
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
+
+  if (isFetching) {
+    return <center>Loading...</center>;
+  }
+
   return (
     <div className="mx-20">
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl pt-5">
